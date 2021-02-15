@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -15,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     protected FloatingActionButton addCourseFAB;
     protected ListView gradeListView;
+    protected ArrayAdapter courseAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +24,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         addCourseFAB = findViewById(R.id.AddCourseFAB);
         gradeListView = findViewById(R.id.gradeListView);
+        String[] testing = {"test","test2","test3","test4"};
+        courseAdapter = new ArrayAdapter<String>(this, R.layout.activity_listview, testing);
+        gradeListView.setAdapter(courseAdapter);
 
         addCourseFAB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(), assignmentActivity.class);
+                intent.putExtra("position",id);
                 startActivity(intent);
             }
         });
