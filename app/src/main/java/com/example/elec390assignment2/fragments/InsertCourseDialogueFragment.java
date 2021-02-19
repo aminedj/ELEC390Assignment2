@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.elec390assignment2.MainActivity;
 import com.example.elec390assignment2.R;
 import com.example.elec390assignment2.models.Course;
 import com.example.elec390assignment2.models.DatabaseHelper;
@@ -44,6 +45,7 @@ public class InsertCourseDialogueFragment extends DialogFragment {
                     Course newCourse = new Course(courseTitleEditText.getText().toString(), courseCodeEditText.getText().toString());
                     db.addCourse(newCourse);
                     Toast.makeText(getContext(), "Course added!", Toast.LENGTH_SHORT).show();
+                    ((MainActivity) getActivity()).loadListView();
                     getDialog().dismiss();
 
                 }

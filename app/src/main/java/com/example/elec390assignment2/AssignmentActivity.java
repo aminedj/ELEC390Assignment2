@@ -19,26 +19,18 @@ import java.util.ArrayList;
 public class AssignmentActivity extends AppCompatActivity {
     private static final String TAG = "assigmentActivity";
     protected ListView assignmentsListView;
-    protected ArrayAdapter assignmentAdapter;
-    protected DatabaseHelper db;
-    protected ArrayList<Assignment> assignements;
     protected FloatingActionButton addAssignmentFAB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assignment);
-        db = new DatabaseHelper(getApplicationContext());
         assignmentsListView = findViewById(R.id.assignmentListView);
-        int courseId = getSelectedId();
         FragmentManager fragmentManager = getSupportFragmentManager();
         InsertAssignmentDialogueFragment dialog = new InsertAssignmentDialogueFragment();
         final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        addAssignmentFAB = findViewById(R.id.addAssignmentFAB);
-        assignements = db.getAllAssignment(courseId);
-        assignmentAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.activity_listview, assignmenToString(assignements));
-        assignmentsListView.setAdapter(assignmentAdapter);
+        loadAssignmentListView();
         addAssignmentFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,11 +43,20 @@ public class AssignmentActivity extends AppCompatActivity {
         });
     }
 
+    public void loadAssignmentListView() {
+        DatabaseHelper db = new DatabaseHelper(getApplicationContext());
+        int courseId = getSelectedId();
+        addAssignmentFAB = findViewById(R.id.addAssignmentFAB);
+        ArrayList<Assignment> assignments = db.getAllAssignment(courseId);
+        ArrayAdapter<String> assignmentAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.activity_listview, assignmentToString(assignments));
+        assignmentsListView.setAdapter(assignmentAdapter);
+    }
+
     private int getSelectedId() {
         return getIntent().getIntExtra("Id", 404);
     }
 
-    private ArrayList<String> assignmenToString(ArrayList<Assignment> assignements) {
+    private ArrayList<String> assignmentToString(ArrayList<Assignment> assignements) {
         ArrayList<String> strAssignments = new ArrayList<String>();
         for (Assignment assignement : assignements
         ) {

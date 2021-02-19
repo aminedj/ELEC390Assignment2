@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.elec390assignment2.AssignmentActivity;
+import com.example.elec390assignment2.MainActivity;
 import com.example.elec390assignment2.R;
 import com.example.elec390assignment2.models.Assignment;
 import com.example.elec390assignment2.models.DatabaseHelper;
@@ -45,6 +47,7 @@ public class InsertAssignmentDialogueFragment extends DialogFragment {
                     Assignment newAssignment = new Assignment(assignmentTitleEditText.getText().toString(), Integer.parseInt(gradeEditText.getText().toString()), id);
                     db.addAssignment(newAssignment);
                     Toast.makeText(getContext(), "Assignment added!", Toast.LENGTH_SHORT).show();
+                    ((AssignmentActivity) getActivity()).loadAssignmentListView();
                     getDialog().dismiss();
                 } else {
                     Toast.makeText(getContext(), "Grade must be less than 100", Toast.LENGTH_SHORT).show();

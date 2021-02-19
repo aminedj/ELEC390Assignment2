@@ -20,20 +20,15 @@ public class MainActivity extends AppCompatActivity {
 
     protected FloatingActionButton addCourseFAB;
     protected ListView gradeListView;
-    protected ArrayAdapter courseAdapter;
-    protected DatabaseHelper db;
     protected ArrayList<Course> courses;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        db = new DatabaseHelper(getApplicationContext());
         addCourseFAB = findViewById(R.id.AddCourseFAB);
         gradeListView = findViewById(R.id.gradeListView);
-        courses = db.getAllClasses();
-        courseAdapter = new ArrayAdapter<String>(this, R.layout.activity_listview, coursesToString(courses));
-        gradeListView.setAdapter(courseAdapter);
+        loadListView();
 
         addCourseFAB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,6 +45,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    public void loadListView() {
+        DatabaseHelper db = new DatabaseHelper(getApplicationContext());
+        db = new DatabaseHelper(getApplicationContext());
+        courses = db.getAllClasses();
+        db.close();
+        ArrayAdapter<String> courseAdapter = new ArrayAdapter<String>(this, R.layout.activity_listview, coursesToString(courses));
+        gradeListView.setAdapter(courseAdapter);
     }
 
     protected ArrayList<String> coursesToString(ArrayList<Course> courses) {
