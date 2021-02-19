@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,15 +24,25 @@ public class InsertCourseDialogueFragment extends DialogFragment {
 //        return super.onCreateView(inflater, container, savedInstanceState);
 
         View view = inflater.inflate(R.layout.fragment_insert_course, container, false);
-        courseTitleEditText = view.findViewById(R.id.courseTitleEditText);
-        courseCodeEditText = view.findViewById(R.id.courseCodeEditText);
+        courseTitleEditText = view.findViewById(R.id.assignmentTitleEditText);
+        courseCodeEditText = view.findViewById(R.id.assignmentGradeEditText);
 
-        saveCourseButton = view.findViewById(R.id.savebtn);
-        cancelCourseButton = view.findViewById(R.id.cancelbtn);
+        saveCourseButton = view.findViewById(R.id.assSavebtn);
+        cancelCourseButton = view.findViewById(R.id.assCancelbtn);
+        DatabaseHelper db = new DatabaseHelper(getContext());
 
         saveCourseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (courseTitleEditText.getText().toString().matches("") || courseCodeEditText.getText().toString().matches("")) {
+                    Toast.makeText(getContext(), "Please enter all info", Toast.LENGTH_SHORT).show();
+                } else {
+                    Course newCourse = new Course(courseTitleEditText.getText().toString(), courseCodeEditText.getText().toString());
+                    db.addCourse(newCourse);
+                    Toast.makeText(getContext(), "Course added!", Toast.LENGTH_SHORT).show();
+                    getDialog().dismiss();
+
+                }
             }
         });
 
