@@ -1,4 +1,4 @@
-package com.example.elec390assignment2;
+package com.example.elec390assignment2.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +11,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+
+import com.example.elec390assignment2.R;
+import com.example.elec390assignment2.models.Assignment;
+import com.example.elec390assignment2.models.DatabaseHelper;
 
 public class InsertAssignmentDialogueFragment extends DialogFragment {
     protected EditText assignmentTitleEditText;

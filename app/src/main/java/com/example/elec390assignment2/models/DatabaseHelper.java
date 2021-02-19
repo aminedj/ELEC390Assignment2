@@ -1,12 +1,14 @@
-package com.example.elec390assignment2;
+package com.example.elec390assignment2.models;
 
-import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+
+import com.example.elec390assignment2.models.Assignment;
+import com.example.elec390assignment2.models.Course;
 
 import java.util.ArrayList;
 
@@ -65,8 +67,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_COURSE_TITLE, course.getTitle());
         values.put(KEY_COURSE_CODE, course.getCode());
-
-        return db.insert(TABLE_COURSES, null, values);
+        long id = db.insert(TABLE_COURSES, null, values);
+        db.close();
+        return id;
     }
 
     public long addAssignment(Assignment assignment) {
@@ -75,14 +78,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_ASSIGNMENT_TITLE, assignment.getTitle());
         values.put(KEY_ASSIGNMENT_GRADE, assignment.getGrade());
         values.put(KEY_COURSE_ID, assignment.getCourseId());
-
-        return db.insert(TABLE_ASSIGNMENT, null, values);
+        long id = db.insert(TABLE_ASSIGNMENT, null, values);
+        db.close();
+        return id;
     }
 
     public int removeClass(int classId) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_ASSIGNMENT, KEY_COURSE_ID + "= ?", new String[]{String.valueOf(classId)});
-        return db.delete(TABLE_COURSES, KEY_ID + "= ?", new String[]{String.valueOf(classId)});
+        int id = db.delete(TABLE_COURSES, KEY_ID + "= ?", new String[]{String.valueOf(classId)});
+        db.close();
+        return id;
 
     }
 
@@ -102,6 +108,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 courses.add(course);
             } while (c.moveToNext());
         }
+        c.close();
+        db.close();
         return courses;
     }
 
@@ -122,6 +130,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 assignments.add(assignment);
             } while (c.moveToNext());
         }
+        c.close();
+        db.close();
         return assignments;
     }
 

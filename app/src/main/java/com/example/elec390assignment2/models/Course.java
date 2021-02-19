@@ -1,4 +1,4 @@
-package com.example.elec390assignment2;
+package com.example.elec390assignment2.models;
 
 public class Course {
     private int id;

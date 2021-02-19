@@ -9,6 +9,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.elec390assignment2.fragments.InsertAssignmentDialogueFragment;
+import com.example.elec390assignment2.models.Assignment;
+import com.example.elec390assignment2.models.DatabaseHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
