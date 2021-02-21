@@ -113,7 +113,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return courses;
     }
 
-    public ArrayList<Assignment> getAllAssignment(int courseId) {
+    public ArrayList<Assignment> getAllAssignmentsAClass(int courseId) {
         SQLiteDatabase db = this.getReadableDatabase();
         String selectQuery = "SELECT  * FROM " + TABLE_ASSIGNMENT + " WHERE " + KEY_COURSE_ID + " = '" + courseId + "'";
         ArrayList<Assignment> assignments = new ArrayList<Assignment>();
@@ -125,8 +125,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 assignment.setGrade((c.getInt(c.getColumnIndex(KEY_ASSIGNMENT_GRADE))));
                 assignment.setTitle(c.getString(c.getColumnIndex(KEY_ASSIGNMENT_TITLE)));
                 assignment.setCourseId(c.getInt(c.getColumnIndex(KEY_COURSE_ID)));
+                assignments.add(assignment);
+            } while (c.moveToNext());
+        }
+        c.close();
+        db.close();
+        return assignments;
+    }
 
-                // adding to todo list
+    public ArrayList<Assignment> getAllAssignmentsAverage() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectQuery = "SELECT  * FROM " + TABLE_ASSIGNMENT;
+        ArrayList<Assignment> assignments = new ArrayList<Assignment>();
+        Cursor c = db.rawQuery(selectQuery, null);
+        if (c.moveToFirst()) {
+            do {
+                Assignment assignment = new Assignment();
+                assignment.setId(c.getInt((c.getColumnIndex(KEY_ID))));
+                assignment.setGrade((c.getInt(c.getColumnIndex(KEY_ASSIGNMENT_GRADE))));
+                assignment.setTitle(c.getString(c.getColumnIndex(KEY_ASSIGNMENT_TITLE)));
+                assignment.setCourseId(c.getInt(c.getColumnIndex(KEY_COURSE_ID)));
                 assignments.add(assignment);
             } while (c.moveToNext());
         }

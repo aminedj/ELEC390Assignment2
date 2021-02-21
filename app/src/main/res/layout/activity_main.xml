@@ -9,7 +9,15 @@
     <ListView
         android:id="@+id/gradeListView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="728dp"
+        android:layout_below="@+id/allClassAverageTextView"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="-4dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="0dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/AddCourseFAB"
@@ -21,5 +29,13 @@
         android:layout_marginBottom="30dp"
         android:clickable="true"
         app:srcCompat="@android:drawable/ic_input_add" />
+
+    <TextView
+        android:id="@+id/allClassAverageTextView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:textSize="24sp" />
 
 </RelativeLayout>

@@ -41,7 +41,7 @@ public class InsertAssignmentDialogueFragment extends DialogFragment {
             public void onClick(View v) {
                 if (assignmentTitleEditText.getText().toString().matches("") || gradeEditText.getText().toString().matches("")) {
                     Toast.makeText(getContext(), "Please enter all info", Toast.LENGTH_SHORT).show();
-                } else if (Integer.parseInt(gradeEditText.getText().toString()) < 100) {
+                } else if (Integer.parseInt(gradeEditText.getText().toString()) <= 100) {
                     Bundle bundle = getArguments();
                     int id = bundle.getInt("Id");
                     Assignment newAssignment = new Assignment(assignmentTitleEditText.getText().toString(), Integer.parseInt(gradeEditText.getText().toString()), id);
